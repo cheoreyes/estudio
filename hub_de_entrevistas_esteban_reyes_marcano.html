@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esteban Reyes Marcano | Tecnología, IA & Futuro - Hub de Entrevistas</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgMain: '#0B0F19',
+                        bgCard: '#111827',
+                        bgElevated: '#1F2937',
+                        accentBlue: '#3B82F6',
+                        accentCyan: '#06B6D4',
+                        textPrimary: '#F9FAFB',
+                        textMuted: '#9CA3AF'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0B0F19;
+            color: #F9FAFB;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        /* Efectos de fondo sutiles */
+        .glow-effect {
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.14), rgba(6, 182, 212, 0.05) 45%, transparent 70%);
+        }
+        /* Scrollbar personalizada para lista de capítulos */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111827;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #3B82F6;
+        }
+        /* Animación de pulso para capítulo activo */
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(59, 130, 246, 0.8); }
+            50% { border-color: rgba(6, 182, 212, 0.4); }
+        }
+        .chapter-active {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.18) 0%, rgba(17, 24, 39, 0.6) 100%);
+            border-left: 4px solid #3B82F6 !important;
+            animation: pulse-border 2.5s infinite;
+        }
+        /* Contenedor responsivo 16:9 para el reproductor */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-accentBlue selection:text-white">
+
+    <!-- Notificación Flotante (Toast) -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-bgCard border border-accentCyan/50 text-textPrimary px-5 py-3.5 rounded-xl shadow-2xl flex items-center gap-3">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-accentCyan shrink-0"></i>
+        <span id="toast-message" class="text-sm font-medium">Enlace copiado al portapapeles</span>
+    </div>
+
+    <!-- 1. HEADER / NAVBAR STICKY -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-bgMain/85 border-b border-gray-800/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Marca Personal -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accentBlue to-accentCyan flex items-center justify-center shadow-lg shadow-accentBlue/20 group-hover:scale-105 transition-transform">
+                    <span class="font-display font-bold text-lg text-white tracking-wider">ER</span>
+                </div>
+                <div>
+                    <span class="font-display font-bold text-base sm:text-lg text-white block leading-none">Esteban Reyes Marcano</span>
+                    <span class="text-xs text-accentCyan font-medium tracking-wide">Tecnología, IA & Futuro</span>
+                </div>
+            </a>
+
+            <!-- Enlaces Desktop -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-textMuted">
+                <a href="#ultima-entrevista" class="hover:text-white transition-colors">Última Entrevista</a>
+                <a href="#highlights" class="hover:text-white transition-colors">Momentos Clave (Clips)</a>
+                <a href="#archivo" class="hover:text-white transition-colors">Archivo Temático</a>
+                <a href="#sobre-esteban" class="hover:text-white transition-colors">Sobre Esteban</a>
+            </nav>
+
+            <!-- Botón CTA -->
+            <div class="hidden sm:flex items-center gap-3">
+                <a href="#suscripcion" class="px-4 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-accentBlue to-accentCyan text-white shadow-lg shadow-accentBlue/25 hover:opacity-95 transition-all flex items-center gap-2">
+                    <i data-lucide="bell" class="w-4 h-4"></i>
+                    <span>Suscribirse / Contacto</span>
+                </a>
+            </div>
+
+            <!-- Botón Menú Móvil -->
+            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Menú Desplegable Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bgCard border-b border-gray-800 px-4 pt-3 pb-6 space-y-3">
+            <a href="#ultima-entrevista" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-gray-800">Última Entrevista</a>
+            <a href="#highlights" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-gray-800">Momentos Clave (Clips)</a>
+            <a href="#archivo" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-gray-800">Archivo Temático</a>
+            <a href="#sobre-esteban" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-200 hover:bg-gray-800">Sobre Esteban</a>
+            <a href="#suscripcion" class="block w-full text-center mt-3 px-4 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-accentBlue to-accentCyan text-white">
+                Suscribirse / Contacto
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION: LA ENTREVISTA DESTACADA DE LA SEMANA -->
+    <section id="ultima-entrevista" class="relative glow-effect pt-8 pb-16 lg:py-16 border-b border-gray-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Badge Superior -->
+            <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/10 border border-red-500/30 text-xs sm:text-sm text-red-300 mb-6">
+                <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                <span class="font-semibold text-red-400 uppercase tracking-wider" id="hero-badge-status">ÚLTIMA EDICIÓN</span>
+                <span class="text-gray-500">·</span>
+                <span id="hero-programa" class="text-gray-200 font-medium">Entre Líneas con Vladimir Villegas (Unión Radio 90.3 FM)</span>
+                <span class="text-gray-500">·</span>
+                <span id="hero-fecha" class="text-accentCyan font-medium">22 Oct 2026</span>
+            </div>
+
+            <!-- Grid Principal Hero -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+                
+                <!-- Columna Izquierda: Contexto, Resumen y Capítulos (5 columnas en Desktop) -->
+                <div class="lg:col-span-5 space-y-6 order-2 lg:order-1">
+                    <h1 id="hero-titulo" class="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-white leading-tight">
+                        La Revolución del Auto Eléctrico, Geopolítica de Chips y el Reto Energético
+                    </h1>
+
+                    <!-- Resumen Ejecutivo en 3 Viñetas -->
+                    <div class="bg-bgCard/90 border border-gray-800 rounded-2xl p-5 space-y-3 shadow-inner">
+                        <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accentCyan">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            <span>Resumen Ejecutivo (Key Takeaways)</span>
+                        </div>
+                        <ul id="hero-bullets" class="space-y-2.5 text-sm text-gray-300 leading-relaxed">
+                            <li class="flex items-start gap-2.5">
+                                <span class="text-accentBlue font-bold mt-0.5">•</span>
+                                <span><strong>Nueva Revolución Industrial:</strong> Convergencia de motores eléctricos silenciosos, baterías de alta densidad y chips con IA.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="text-accentBlue font-bold mt-0.5">•</span>
+                                <span><strong>Cambio de liderazgo global:</strong> BYD cuadruplica en volumen a Tesla (8M vs 1.9M) mientras Elon Musk apuesta por Robotaxis y humanoides.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <span class="text-accentBlue font-bold mt-0.5">•</span>
+                                <span><strong>Geopolítica y Venezuela:</strong> El dominio de Nvidia, el 90% de tierras raras en China y cómo recuperar el Guri con políticas públicas a largo plazo.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Índice Interactivo de Capítulos (Timestamps) -->
+                    <div class="bg-bgCard border border-gray-800 rounded-2xl p-4 sm:p-5">
+                        <div class="flex items-center justify-between mb-3">
+                            <h2 class="text-sm font-display font-bold uppercase tracking-wider text-white flex items-center gap-2">
+                                <i data-lucide="list-video" class="w-4 h-4 text-accentBlue"></i>
+                                <span>Capítulos de la Entrevista</span>
+                            </h2>
+                            <span id="hero-duration-badge" class="text-xs text-textMuted bg-gray-800/80 px-2.5 py-1 rounded-md font-mono">
+                                Corte: 35:05 - 56:13 (21m)
+                            </span>
+                        </div>
+                        <p class="text-xs text-textMuted mb-3">Haz clic en cualquier tema para saltar directamente a ese momento en el reproductor:</p>
+                        
+                        <div id="chapters-list" class="space-y-2 max-h-80 overflow-y-auto custom-scrollbar pr-1">
+                            <!-- Se inyecta dinámicamente vía JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Reproductor Inteligente de YouTube (7 columnas en Desktop) -->
+                <div class="lg:col-span-7 order-1 lg:order-2 lg:sticky lg:top-28">
+                    <div class="bg-bgCard border border-gray-800 rounded-2xl overflow-hidden shadow-2xl shadow-black/60">
+                        
+                        <!-- Barra Superior de Ventana del Reproductor -->
+                        <div class="px-4 py-3 bg-gray-900/90 border-b border-gray-800 flex items-center justify-between text-xs text-textMuted">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
+                                <span class="ml-2 font-mono text-gray-300">Reproductor Inteligente · Corte Acotado</span>
+                            </div>
+                            <span id="player-time-display" class="font-mono text-accentCyan font-semibold">35:05 / 56:13</span>
+                        </div>
+
+                        <!-- Contenedor IFrame API de YouTube -->
+                        <div class="video-container bg-black">
+                            <div id="youtube-player"></div>
+                        </div>
+
+                        <!-- Barra de Estado y Controles Rápidos debajo del video -->
+                        <div class="p-4 sm:p-5 bg-bgCard space-y-4">
+                            <!-- Indicador de capítulo activo -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-gray-800/80">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="relative flex h-3 w-3 shrink-0">
+                                        <span id="status-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accentCyan opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-accentCyan"></span>
+                                    </span>
+                                    <span class="text-xs uppercase tracking-wider text-textMuted font-semibold">Viendo ahora:</span>
+                                    <span id="current-chapter-title" class="text-sm font-medium text-white line-clamp-1">
+                                        [35:05] Inicio y el espectáculo del nuevo Tesla Roadster
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Botones de Acción Rápida -->
+                            <div class="flex flex-wrap items-center justify-between gap-3">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <button onclick="restartInterviewSegment()" class="px-3.5 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs sm:text-sm font-medium text-white flex items-center gap-2 transition-colors border border-gray-700">
+                                        <i data-lucide="rotate-ccw" class="w-4 h-4 text-accentBlue"></i>
+                                        <span>Reiniciar entrevista (35:05)</span>
+                                    </button>
+                                    <button onclick="skipNextChapter()" class="px-3.5 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-xs sm:text-sm font-medium text-white flex items-center gap-2 transition-colors border border-gray-700">
+                                        <i data-lucide="skip-forward" class="w-4 h-4 text-accentCyan"></i>
+                                        <span>Siguiente capítulo</span>
+                                    </button>
+                                </div>
+
+                                <button onclick="shareCurrentFragment()" class="px-4 py-2 rounded-xl bg-accentBlue/15 hover:bg-accentBlue/25 border border-accentBlue/40 text-xs sm:text-sm font-medium text-accentBlue hover:text-white flex items-center gap-2 transition-all">
+                                    <i data-lucide="share-2" class="w-4 h-4"></i>
+                                    <span>Compartir este fragmento</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SECCIÓN: HIGHLIGHTS / IDEAS EN 90 SEGUNDOS (PÍLDORAS DE VALOR) -->
+    <section id="highlights" class="py-16 lg:py-20 border-b border-gray-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Encabezado de Sección -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 text-accentCyan text-xs font-bold uppercase tracking-widest mb-2">
+                        <i data-lucide="zap" class="w-4 h-4"></i>
+                        <span>Micro-Clips Destacados</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-display font-bold text-white">
+                        Ideas Clave en 90 Segundos
+                    </h2>
+                </div>
+                <p class="text-sm text-textMuted max-w-md">
+                    ¿Poco tiempo? Explora los 4 cortes de mayor impacto de la entrevista de esta semana. Haz clic en cualquiera para reproducir directamente ese segmento.
+                </p>
+            </div>
+
+            <!-- Grid de 4 Tarjetas de Highlights -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Clip 1 -->
+                <div class="bg-bgCard border border-gray-800 hover:border-accentBlue/60 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-accentBlue/15 text-accentBlue border border-accentBlue/30">
+                                Clip #1 · Innovación
+                            </span>
+                            <span class="text-xs font-mono text-textMuted flex items-center gap-1">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-accentCyan"></i>
+                                37:04 - 38:37 (1m 33s)
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-display font-bold text-white mb-3 group-hover:text-accentBlue transition-colors">
+                            La Nueva Revolución Industrial
+                        </h3>
+                        <blockquote class="text-sm text-gray-300 italic border-l-2 border-accentCyan pl-3 mb-6 leading-relaxed">
+                            "No es solo cambiar gasolina por electricidad; es la convergencia de nuevos motores silenciosos, una revolución química en baterías y chips con inteligencia artificial que también impulsan drones y robots."
+                        </blockquote>
+                    </div>
+                    <button onclick="playClip(2224, 2317, 'Clip 1: La Nueva Revolución Industrial')" class="w-full py-2.5 px-4 rounded-xl bg-gray-800/90 group-hover:bg-accentBlue text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>Reproducir este corte</span>
+                    </button>
+                </div>
+
+                <!-- Clip 2 -->
+                <div class="bg-bgCard border border-gray-800 hover:border-accentBlue/60 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-cyan-500/15 text-accentCyan border border-cyan-500/30">
+                                Clip #2 · Mercado Global
+                            </span>
+                            <span class="text-xs font-mono text-textMuted flex items-center gap-1">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-accentCyan"></i>
+                                40:23 - 43:48 (3m 25s)
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-display font-bold text-white mb-3 group-hover:text-accentCyan transition-colors">
+                            Tesla vs. BYD y la apuesta por Robotaxis
+                        </h3>
+                        <blockquote class="text-sm text-gray-300 italic border-l-2 border-accentBlue pl-3 mb-6 leading-relaxed">
+                            "Mientras la china BYD ya produce cerca de 8 millones de vehículos frente a los menos de 2 millones de Tesla, Elon Musk está moviendo el tablero hacia los robotaxis autónomos y robots humanoides."
+                        </blockquote>
+                    </div>
+                    <button onclick="playClip(2423, 2628, 'Clip 2: Tesla vs. BYD y la apuesta por Robotaxis')" class="w-full py-2.5 px-4 rounded-xl bg-gray-800/90 group-hover:bg-accentBlue text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>Reproducir este corte</span>
+                    </button>
+                </div>
+
+                <!-- Clip 3 -->
+                <div class="bg-bgCard border border-gray-800 hover:border-accentBlue/60 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-purple-500/15 text-purple-400 border border-purple-500/30">
+                                Clip #3 · Geopolítica
+                            </span>
+                            <span class="text-xs font-mono text-textMuted flex items-center gap-1">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-accentCyan"></i>
+                                46:09 - 48:37 (2m 28s)
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-display font-bold text-white mb-3 group-hover:text-accentBlue transition-colors">
+                            Geopolítica: Chips, Tierras Raras y Litio
+                        </h3>
+                        <blockquote class="text-sm text-gray-300 italic border-l-2 border-purple-400 pl-3 mb-6 leading-relaxed">
+                            "El poder mundial hoy se juega en 4 tableros: los chips de Nvidia fabricados en Taiwán, el 90% de refinación de tierras raras en manos de China, el Triángulo del Litio en Sudamérica y los satélites de órbita baja."
+                        </blockquote>
+                    </div>
+                    <button onclick="playClip(2769, 2917, 'Clip 3: Geopolítica: Chips, Tierras Raras y Litio')" class="w-full py-2.5 px-4 rounded-xl bg-gray-800/90 group-hover:bg-accentBlue text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>Reproducir este corte</span>
+                    </button>
+                </div>
+
+                <!-- Clip 4 -->
+                <div class="bg-bgCard border border-gray-800 hover:border-accentBlue/60 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group shadow-lg">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                                Clip #4 · Visión País
+                            </span>
+                            <span class="text-xs font-mono text-textMuted flex items-center gap-1">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-accentCyan"></i>
+                                51:19 - 56:02 (4m 43s)
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-display font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
+                            Venezuela: El Guri y la Transición Eléctrica
+                        </h3>
+                        <blockquote class="text-sm text-gray-300 italic border-l-2 border-emerald-400 pl-3 mb-6 leading-relaxed">
+                            "Venezuela tuvo hitos de visión a largo plazo como el Guri o Fundayacucho. Hoy necesitamos recuperar la infraestructura eléctrica e integrar energía solar y eólica para no quedar fuera de la era digital."
+                        </blockquote>
+                    </div>
+                    <button onclick="playClip(3079, 3362, 'Clip 4: Venezuela: El Guri y la Transición Eléctrica')" class="w-full py-2.5 px-4 rounded-xl bg-gray-800/90 group-hover:bg-accentBlue text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>Reproducir este corte</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECCIÓN: ARCHIVO DE ENTREVISTAS & ANÁLISIS (FILTROS DINÁMICOS Y BUSCADOR) -->
+    <section id="archivo" class="py-16 lg:py-20 border-b border-gray-800/60 bg-bgCard/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <div class="inline-flex items-center gap-2 text-accentBlue text-xs font-bold uppercase tracking-widest mb-2">
+                    <i data-lucide="library" class="w-4 h-4"></i>
+                    <span>Repositorio Interactivo</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-display font-bold text-white mb-3">
+                    Archivo de Entrevistas & Análisis
+                </h2>
+                <p class="text-sm sm:text-base text-textMuted">
+                    Explora todas las intervenciones semanales de Esteban Reyes Marcano. Filtra por eje temático o busca conceptos específicos (ej. <span class="text-gray-300 font-medium">Nvidia, Guri, BYD, Litio, IA</span>).
+                </p>
+            </div>
+
+            <!-- Barra de Búsqueda y Filtros -->
+            <div class="bg-bgCard border border-gray-800 rounded-2xl p-4 sm:p-6 mb-8 space-y-5 shadow-xl">
+                <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <!-- Input Buscador -->
+                    <div class="relative w-full md:w-96">
+                        <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Buscar por tema: Nvidia, BYD, Guri, Litio..." 
+                            class="w-full pl-11 pr-4 py-2.5 bg-bgMain border border-gray-700 focus:border-accentBlue rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none transition-colors"
+                        >
+                    </div>
+
+                    <!-- Contador de resultados -->
+                    <div id="results-count" class="text-xs sm:text-sm text-textMuted font-medium">
+                        Mostrando <span class="text-white font-bold">3</span> entrevistas disponibles
+                    </div>
+                </div>
+
+                <!-- Botones de Filtro por Etiquetas -->
+                <div id="filter-tags" class="flex flex-wrap items-center gap-2 pt-2 border-t border-gray-800/80">
+                    <!-- Se generan en JS -->
+                </div>
+            </div>
+
+            <!-- Grid de Tarjetas de Entrevistas -->
+            <div id="interviews-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Se inyecta dinámicamente desde el arreglo JSON en JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. SECCIÓN: SOBRE ESTEBAN REYES MARCANO -->
+    <section id="sobre-esteban" class="py-16 lg:py-24 border-b border-gray-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-bgCard via-bgCard to-blue-950/30 border border-gray-800 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    
+                    <!-- Columna Avatar / Identidad Visual -->
+                    <div class="lg:col-span-4 flex flex-col items-center text-center">
+                        <div class="relative mb-5">
+                            <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl bg-gradient-to-tr from-accentBlue via-indigo-600 to-accentCyan p-1 shadow-2xl shadow-accentBlue/20">
+                                <div class="w-full h-full bg-bgMain rounded-[20px] flex flex-col items-center justify-center p-4">
+                                    <i data-lucide="cpu" class="w-12 h-12 text-accentCyan mb-2"></i>
+                                    <span class="font-display font-bold text-2xl text-white tracking-wider">ERM</span>
+                                    <span class="text-[11px] text-textMuted uppercase tracking-widest mt-1">Tech Analyst</span>
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-3 -right-3 bg-bgCard border border-gray-700 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-lg">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <span class="text-xs font-semibold text-white">Columnista Radial</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-display font-bold text-white">Esteban Reyes Marcano</h3>
+                        <p class="text-sm text-accentCyan font-medium mb-4">Analista de Tecnología, Innovación & Políticas Públicas</p>
+                        
+                        <div class="flex items-center gap-3">
+                            <a href="#suscripcion" class="p-2.5 rounded-xl bg-gray-800 hover:bg-accentBlue text-gray-300 hover:text-white transition-colors" title="LinkedIn">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#suscripcion" class="p-2.5 rounded-xl bg-gray-800 hover:bg-accentBlue text-gray-300 hover:text-white transition-colors" title="X / Twitter">
+                                <i data-lucide="twitter" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#suscripcion" class="p-2.5 rounded-xl bg-gray-800 hover:bg-accentBlue text-gray-300 hover:text-white transition-colors" title="Contacto Prensa">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Columna Biografía y Ejes de Análisis -->
+                    <div class="lg:col-span-8 space-y-6">
+                        <div class="inline-flex items-center gap-2 text-accentCyan text-xs font-bold uppercase tracking-widest">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                            <span>Perfil Ejecutivo & Visión</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-display font-bold text-white leading-snug">
+                            Descifrando el impacto de la revolución tecnológica en la geopolítica, la economía y el futuro de Venezuela
+                        </h2>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                            Cada semana, en espacios informativos de referencia como <em>Entre Líneas con Vladimir Villegas</em> (Unión Radio), <strong>Esteban Reyes Marcano</strong> traduce las tendencias más complejas de la tecnología global en análisis estratégicos comprensibles para líderes empresariales, académicos y ciudadanos.
+                        </p>
+                        <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                            Su enfoque conecta la disrupción en semiconductores, inteligencia artificial, transición hacia la movilidad eléctrica y exploración espacial con los retos prácticos de infraestructura, energía y diseño de políticas públicas de largo plazo en América Latina y Venezuela.
+                        </p>
+
+                        <!-- Pilares Temáticos -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                            <div class="bg-bgMain/70 border border-gray-800 p-4 rounded-xl">
+                                <i data-lucide="brain-circuit" class="w-6 h-6 text-accentBlue mb-2"></i>
+                                <h4 class="font-display font-bold text-white text-sm mb-1">IA & Semiconductores</h4>
+                                <p class="text-xs text-textMuted">El nuevo petróleo del siglo XXI, soberanía de datos y cadenas de suministro de chips.</p>
+                            </div>
+                            <div class="bg-bgMain/70 border border-gray-800 p-4 rounded-xl">
+                                <i data-lucide="battery-charging" class="w-6 h-6 text-accentCyan mb-2"></i>
+                                <h4 class="font-display font-bold text-white text-sm mb-1">Transición Energética</h4>
+                                <p class="text-xs text-textMuted">Movilidad eléctrica, baterías de nueva generación, tierras raras y redes inteligentes.</p>
+                            </div>
+                            <div class="bg-bgMain/70 border border-gray-800 p-4 rounded-xl">
+                                <i data-lucide="globe-2" class="w-6 h-6 text-emerald-400 mb-2"></i>
+                                <h4 class="font-display font-bold text-white text-sm mb-1">Políticas de Estado</h4>
+                                <p class="text-xs text-textMuted">Formación de talento, modernización energética e inserción competitiva de Venezuela.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FOOTER & SUSCRIPCIÓN A ALERTAS SEMANALES -->
+    <footer id="suscripcion" class="pt-16 pb-12 bg-bgMain">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Caja de Suscripción -->
+            <div class="bg-gradient-to-r from-blue-900/30 via-bgCard to-cyan-900/30 border border-accentBlue/30 rounded-3xl p-6 sm:p-10 mb-12 text-center max-w-4xl mx-auto">
+                <h3 class="text-xl sm:text-2xl font-display font-bold text-white mb-2">
+                    Recibe el Resumen Ejecutivo de cada Jueves
+                </h3>
+                <p class="text-sm text-gray-300 mb-6 max-w-xl mx-auto">
+                    Suscríbete para recibir en tu correo el enlace directo al corte de la entrevista semanal de Esteban Reyes Marcano junto con las 3 ideas clave y los capítulos marcados.
+                </p>
+                <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto" onsubmit="handleSubscribe(event)">
+                    <input 
+                        type="email" 
+                        id="subscriber-email"
+                        required
+                        placeholder="Tu correo electrónico profesional..." 
+                        class="flex-1 px-4 py-3 rounded-xl bg-bgMain border border-gray-700 text-white text-sm focus:outline-none focus:border-accentCyan"
+                    >
+                    <button type="submit" class="px-6 py-3 rounded-xl bg-gradient-to-r from-accentBlue to-accentCyan text-white font-semibold text-sm hover:opacity-95 transition-opacity shrink-0">
+                        Recibir Alertas
+                    </button>
+                </form>
+            </div>
+
+            <!-- Créditos Inferiores -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-gray-800/80 text-xs text-textMuted">
+                <div class="flex items-center gap-2">
+                    <span class="font-display font-bold text-white">Esteban Reyes Marcano</span>
+                    <span>·</span>
+                    <span>Hub de Entrevistas & Análisis Tecnológico</span>
+                </div>
+                <div>
+                    <span>© 2026 Todos los derechos reservados. Cortes de video vía YouTube IFrame API oficial.</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         LÓGICA JAVASCRIPT Y YOUTUBE IFRAME API
+         ========================================== -->
+    <script>
+        // 1. BASE DE DATOS EN JSON DE LAS ENTREVISTAS (Fácil de escalar cada semana)
+        const interviewsData = [
+            {
+                id: "2026-10-22-union-radio",
+                destacada: true,
+                badgeStatus: "ÚLTIMA EDICIÓN",
+                titulo: "La Revolución del Auto Eléctrico, Geopolítica de Chips y el Reto Energético",
+                medio: "Entre Líneas con Vladimir Villegas (Unión Radio 90.3 FM)",
+                fecha: "22 Oct 2026",
+                youtubeId: "G0-RLLlL1Q8",
+                startSeconds: 2105, // 35:05
+                endSeconds: 3373,   // 56:13
+                duracionTexto: "21 min (35:05 - 56:13)",
+                tags: ["Autos Eléctricos", "Geopolítica Tech", "Inteligencia Artificial", "Venezuela & Energía", "Robótica"],
+                resumenCorto: "Análisis profundo sobre los 3 pilares del vehículo eléctrico, cómo BYD cuadruplica en ventas a Tesla, la carrera por los robotaxis, los 4 tableros geopolíticos (Nvidia/Taiwán, Tierras Raras, Litio y Espacio) y la recuperación eléctrica de Venezuela.",
+                bullets: [
+                    "<strong>Nueva Revolución Industrial:</strong> Convergencia de motores eléctricos silenciosos, baterías de alta densidad y chips con IA.",
+                    "<strong>Cambio de liderazgo global:</strong> BYD cuadruplica en volumen a Tesla (8M vs 1.9M) mientras Elon Musk apuesta por Robotaxis y humanoides.",
+                    "<strong>Geopolítica y Venezuela:</strong> El dominio de Nvidia, el 90% de tierras raras en China y cómo recuperar el Guri con políticas públicas a largo plazo."
+                ],
+                capitulos: [
+                    {
+                        time: 2105,
+                        label: "35:05",
+                        title: "Inicio y el espectáculo del nuevo Tesla Roadster",
+                        desc: "Presentación con Vladimir Villegas y análisis de las promesas de Elon Musk."
+                    },
+                    {
+                        time: 2224,
+                        label: "37:04",
+                        title: "Los 3 pilares de la nueva revolución industrial (Motores, Baterías y Chips)",
+                        desc: "Cómo la reinvención del motor eléctrico, la química de baterías y la IA impulsan autos, drones y robots."
+                    },
+                    {
+                        time: 2423,
+                        label: "40:23",
+                        title: "BYD (8M) vs. Tesla (1.9M) y el giro hacia los Robotaxis y Robots",
+                        desc: "La competencia feroz de las marcas chinas frente a EE.UU. y el cambio de modelo de negocio hacia la autonomía."
+                    },
+                    {
+                        time: 2769,
+                        label: "46:09",
+                        title: "Geopolítica: Nvidia, Tierras Raras, Triángulo del Litio y Espacio",
+                        desc: "Taiwán, el monopolio chino del 90% en tierras raras, el litio sudamericano y los satélites de órbita baja."
+                    },
+                    {
+                        time: 3079,
+                        label: "51:19",
+                        title: "El reto energético en Venezuela: El Guri, energías limpias y políticas públicas",
+                        desc: "Lecciones históricas como el Guri y Fundayacucho para diseñar la transición energética nacional."
+                    }
+                ]
+            },
+            {
+                id: "2026-10-15-union-radio",
+                destacada: false,
+                badgeStatus: "ARCHIVO DESTACADO",
+                titulo: "Agentes de Inteligencia Artificial, Soberanía de Datos y el Futuro del Trabajo",
+                medio: "Entre Líneas con Vladimir Villegas (Unión Radio 90.3 FM)",
+                fecha: "15 Oct 2026",
+                youtubeId: "G0-RLLlL1Q8",
+                startSeconds: 2105,
+                endSeconds: 3373,
+                duracionTexto: "19 min",
+                tags: ["Inteligencia Artificial", "Geopolítica Tech", "Venezuela & Energía"],
+                resumenCorto: "Cómo la evolución desde los chatbots hacia agentes autónomos está redefiniendo la productividad empresarial y qué infraestructura de centros de datos y energía requiere la región.",
+                bullets: [
+                    "<strong>De Chatbots a Agentes:</strong> Sistemas de IA que ejecutan flujos de trabajo completos en empresas.",
+                    "<strong>Demanda energética de los Data Centers:</strong> El vínculo directo entre capacidad eléctrica e inteligencia artificial.",
+                    "<strong>Educación y talento en Venezuela:</strong> Cómo preparar a las universidades para la economía del conocimiento."
+                ],
+                capitulos: [
+                    { time: 2105, label: "35:05", title: "Introducción: La explosión de la IA generativa y agentes", desc: "Contexto global de las inversiones tecnológicas." },
+                    { time: 2423, label: "40:23", title: "Impacto en la industria automotriz y manufactura", desc: "Automatización avanzada y cómputo en el borde." },
+                    { time: 3079, label: "51:19", title: "Infraestructura eléctrica y formación de talento nacional", desc: "Propuestas para insertar a Venezuela en la cadena de valor." }
+                ]
+            },
+            {
+                id: "2026-10-08-union-radio",
+                destacada: false,
+                badgeStatus: "ARCHIVO DESTACADO",
+                titulo: "Robótica Humanoide, Drones Autónomos y Conectividad Satelital LEO",
+                medio: "Entre Líneas con Vladimir Villegas (Unión Radio 90.3 FM)",
+                fecha: "08 Oct 2026",
+                youtubeId: "G0-RLLlL1Q8",
+                startSeconds: 2105,
+                endSeconds: 3373,
+                duracionTexto: "20 min",
+                tags: ["Robótica", "Geopolítica Tech", "Autos Eléctricos"],
+                resumenCorto: "Del automóvil conectado a los robots en fábricas y hogares: por qué la cadena de suministro de baterías y motores eléctricos es la base de la robótica moderna y las constelaciones satelitales.",
+                bullets: [
+                    "<strong>Sinergia Auto-Robot:</strong> Los mismos motores y baterías de los EV ahora dan vida a robots humanoides.",
+                    "<strong>Órbita Baja (LEO):</strong> La disputa geopolítica por las telecomunicaciones espaciales.",
+                    "<strong>Aplicaciones civiles e industriales:</strong> Drones logísticos y telemedicina en zonas remotas."
+                ],
+                capitulos: [
+                    { time: 2224, label: "37:04", title: "De los autos eléctricos a los drones y la robótica", desc: "La convergencia de hardware y software." },
+                    { time: 2769, label: "46:09", title: "La carrera espacial y el control de los satélites de baja altura", desc: "Implicaciones estratégicas y de conectividad." }
+                ]
+            }
+        ];
+
+        const availableTags = [
+            "Todas",
+            "Inteligencia Artificial",
+            "Autos Eléctricos",
+            "Geopolítica Tech",
+            "Venezuela & Energía",
+            "Robótica"
+        ];
+
+        // Variables de Estado
+        let currentInterview = interviewsData[0];
+        let activeChapterIndex = 0;
+        let selectedTag = "Todas";
+        let searchQuery = "";
+        let ytPlayer = null;
+        let isPlayerReady = false;
+        let timeCheckInterval = null;
+        let customClipEnd = null;
+
+        // 2. INICIALIZACIÓN DE ICONOS Y EVENTOS AL CARGAR EL DOM
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            renderChaptersList();
+            renderFilterTags();
+            renderInterviewsGrid();
+
+            // Evento del buscador
+            const searchInput = document.getElementById("search-input");
+            searchInput.addEventListener("input", (e) => {
+                searchQuery = e.target.value.trim().toLowerCase();
+                renderInterviewsGrid();
+            });
+
+            // Menú móvil
+            const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+            const mobileMenu = document.getElementById("mobile-menu");
+            mobileMenuBtn.addEventListener("click", () => {
+                mobileMenu.classList.toggle("hidden");
+            });
+
+            // Cargar la API de YouTube IFrame de forma asíncrona
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        });
+
+        // 3. CONFIGURACIÓN DE LA API DE YOUTUBE IFRAME
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: currentInterview.youtubeId,
+                playerVars: {
+                    'start': currentInterview.startSeconds,
+                    'end': currentInterview.endSeconds,
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'playsinline': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            isPlayerReady = true;
+            updateTimeDisplay(currentInterview.startSeconds, currentInterview.endSeconds);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                startChapterTracking();
+            } else {
+                stopChapterTracking();
+            }
+        }
+
+        // Monitorea el segundo actual del reproductor para resaltar el capítulo activo automáticamente
+        function startChapterTracking() {
+            stopChapterTracking();
+            timeCheckInterval = setInterval(() => {
+                if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+                const currentTime = Math.floor(ytPlayer.getCurrentTime());
+
+                // Actualizar reloj en pantalla
+                updateTimeDisplay(currentTime, currentInterview.endSeconds);
+
+                // Si se seleccionó un micro-clip con fin personalizado, pausar al llegar al límite del clip
+                if (customClipEnd && currentTime >= customClipEnd) {
+                    ytPlayer.pauseVideo();
+                    customClipEnd = null;
+                    showToast("Fin del corte seleccionado. Pulsa Play para continuar viendo la entrevista.");
+                    return;
+                }
+
+                // Límite final de la entrevista (56:13 = 3373s)
+                if (currentTime >= currentInterview.endSeconds) {
+                    ytPlayer.pauseVideo();
+                    stopChapterTracking();
+                    return;
+                }
+
+                // Determinar qué capítulo corresponde al segundo actual
+                let foundIndex = 0;
+                for (let i = 0; i < currentInterview.capitulos.length; i++) {
+                    if (currentTime >= currentInterview.capitulos[i].time) {
+                        foundIndex = i;
+                    }
+                }
+
+                if (foundIndex !== activeChapterIndex) {
+                    activeChapterIndex = foundIndex;
+                    highlightActiveChapter();
+                }
+            }, 800);
+        }
+
+        function stopChapterTracking() {
+            if (timeCheckInterval) {
+                clearInterval(timeCheckInterval);
+                timeCheckInterval = null;
+            }
+        }
+
+        function formatSeconds(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function updateTimeDisplay(currentSec, endSec) {
+            const display = document.getElementById("player-time-display");
+            if (display) {
+                const safeCurrent = Math.max(currentInterview.startSeconds, Math.min(currentSec, endSec));
+                display.textContent = `${formatSeconds(safeCurrent)} / ${formatSeconds(endSec)}`;
+            }
+        }
+
+        // 4. RENDERIZADO Y CONTROL DE CAPÍTULOS INTERACTIVOS
+        function renderChaptersList() {
+            const container = document.getElementById("chapters-list");
+            container.innerHTML = "";
+
+            currentInterview.capitulos.forEach((cap, index) => {
+                const isActive = index === activeChapterIndex;
+                const btn = document.createElement("button");
+                btn.className = `w-full text-left p-3 rounded-xl border border-gray-800/90 hover:border-accentBlue/60 transition-all flex items-start gap-3 group ${isActive ? 'chapter-active' : 'bg-bgMain/60 hover:bg-gray-800/50'}`;
+                btn.onclick = () => seekToChapter(index);
+
+                btn.innerHTML = `
+                    <span class="px-2 py-1 rounded-md text-xs font-mono font-bold shrink-0 mt-0.5 transition-colors ${isActive ? 'bg-accentBlue text-white' : 'bg-gray-800 text-accentCyan group-hover:bg-accentBlue/20'}">
+                        ▶ ${cap.label}
+                    </span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs sm:text-sm font-semibold ${isActive ? 'text-white' : 'text-gray-200 group-hover:text-white'} leading-snug">
+                            ${cap.title}
+                        </p>
+                        <p class="text-xs text-textMuted mt-0.5 line-clamp-1">
+                            ${cap.desc}
+                        </p>
+                    </div>
+                `;
+                container.appendChild(btn);
+            });
+
+            updateNowPlayingBanner();
+        }
+
+        function highlightActiveChapter() {
+            renderChaptersList();
+        }
+
+        function updateNowPlayingBanner() {
+            const cap = currentInterview.capitulos[activeChapterIndex] || currentInterview.capitulos[0];
+            const banner = document.getElementById("current-chapter-title");
+            if (banner && cap) {
+                banner.textContent = `[${cap.label}] ${cap.title}`;
+            }
+        }
+
+        // Saltar a un capítulo específico al hacer clic
+        function seekToChapter(index) {
+            customClipEnd = null;
+            activeChapterIndex = index;
+            const targetTime = currentInterview.capitulos[index].time;
+            highlightActiveChapter();
+
+            if (isPlayerReady && ytPlayer && typeof ytPlayer.seekTo === 'function') {
+                ytPlayer.seekTo(targetTime, true);
+                ytPlayer.playVideo();
+            }
+            updateTimeDisplay(targetTime, currentInterview.endSeconds);
+        }
+
+        // Reproducir desde el inicio de la entrevista (35:05)
+        function restartInterviewSegment() {
+            seekToChapter(0);
+            showToast("Reproduciendo desde el inicio de la entrevista (35:05)");
+        }
+
+        // Saltar al siguiente capítulo
+        function skipNextChapter() {
+            const nextIdx = (activeChapterIndex + 1) % currentInterview.capitulos.length;
+            seekToChapter(nextIdx);
+        }
+
+        // Función para los botones de la sección "Highlights / Ideas en 90 Segundos"
+        function playClip(startSec, endSec, clipTitle) {
+            // Asegurarse de que esté cargada la entrevista del 22 de octubre
+            if (currentInterview.id !== "2026-10-22-union-radio") {
+                loadInterviewById("2026-10-22-union-radio", false);
+            }
+
+            customClipEnd = endSec;
+
+            // Buscar el capítulo correspondiente para resaltarlo
+            const idx = currentInterview.capitulos.findIndex(c => c.time === startSec);
+            if (idx !== -1) {
+                activeChapterIndex = idx;
+                highlightActiveChapter();
+            }
+
+            // Hacer scroll suave hacia el reproductor principal
+            document.getElementById("ultima-entrevista").scrollIntoView({ behavior: "smooth" });
+
+            setTimeout(() => {
+                if (isPlayerReady && ytPlayer && typeof ytPlayer.seekTo === 'function') {
+                    ytPlayer.seekTo(startSec, true);
+                    ytPlayer.playVideo();
+                }
+                const banner = document.getElementById("current-chapter-title");
+                if (banner) {
+                    banner.textContent = `${clipTitle} (${formatSeconds(startSec)} - ${formatSeconds(endSec)})`;
+                }
+                showToast(`Reproduciendo corte: ${clipTitle}`);
+            }, 350);
+        }
+
+        // Compartir el fragmento exacto en el portapapeles
+        function shareCurrentFragment() {
+            let currentSec = currentInterview.capitulos[activeChapterIndex].time;
+            if (isPlayerReady && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+                const playerSec = Math.floor(ytPlayer.getCurrentTime());
+                if (playerSec >= currentInterview.startSeconds) {
+                    currentSec = playerSec;
+                }
+            }
+            const shareUrl = `https://youtu.be/${currentInterview.youtubeId}?t=${currentSec}`;
+            
+            // Copia compatible con iFrames
+            const tempInput = document.createElement("textarea");
+            tempInput.value = shareUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            showToast(`Enlace copiado en el minuto ${formatSeconds(currentSec)}: ${shareUrl}`);
+        }
+
+        // 5. ARCHIVO DE ENTREVISTAS: FILTROS Y CARGA EN EL REPRODUCTOR
+        function renderFilterTags() {
+            const container = document.getElementById("filter-tags");
+            container.innerHTML = "";
+
+            availableTags.forEach(tag => {
+                const isSelected = tag === selectedTag;
+                const btn = document.createElement("button");
+                btn.className = `px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                    isSelected 
+                        ? 'bg-accentBlue text-white shadow-md shadow-accentBlue/30' 
+                        : 'bg-bgMain text-textMuted hover:text-white border border-gray-800 hover:border-gray-700'
+                }`;
+                btn.textContent = tag;
+                btn.onclick = () => {
+                    selectedTag = tag;
+                    renderFilterTags();
+                    renderInterviewsGrid();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function renderInterviewsGrid() {
+            const grid = document.getElementById("interviews-grid");
+            const countEl = document.getElementById("results-count");
+            grid.innerHTML = "";
+
+            const filtered = interviewsData.filter(item => {
+                const matchesTag = selectedTag === "Todas" || item.tags.includes(selectedTag);
+                const matchesSearch = searchQuery === "" || 
+                    item.titulo.toLowerCase().includes(searchQuery) ||
+                    item.resumenCorto.toLowerCase().includes(searchQuery) ||
+                    item.tags.some(t => t.toLowerCase().includes(searchQuery)) ||
+                    item.capitulos.some(c => c.title.toLowerCase().includes(searchQuery) || c.desc.toLowerCase().includes(searchQuery));
+                return matchesTag && matchesSearch;
+            });
+
+            countEl.innerHTML = `Mostrando <span class="text-white font-bold">${filtered.length}</span> ${filtered.length === 1 ? 'entrevista disponible' : 'entrevistas disponibles'}`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-bgCard border border-gray-800 rounded-2xl p-10 text-center">
+                        <p class="text-base text-gray-300 font-medium mb-2">No se encontraron entrevistas con ese criterio de búsqueda.</p>
+                        <button onclick="resetFilters()" class="mt-2 px-4 py-2 rounded-xl bg-accentBlue text-white text-xs font-semibold">
+                            Restablecer filtros
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const isLoaded = item.id === currentInterview.id;
+                const card = document.createElement("article");
+                card.className = `bg-bgCard border ${isLoaded ? 'border-accentCyan/70 ring-1 ring-accentCyan/30' : 'border-gray-800 hover:border-accentBlue/50'} rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl`;
+
+                const tagsHtml = item.tags.map(t => `
+                    <span class="px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-gray-800/90 text-gray-300 border border-gray-700/70">
+                        #${t}
+                    </span>
+                `).join("");
+
+                card.innerHTML = `
+                    <div>
+                        <!-- Cabecera visual de la tarjeta -->
+                        <div class="relative h-44 bg-gray-900 overflow-hidden group cursor-pointer" onclick="loadInterviewById('${item.id}', true)">
+                            <img 
+                                src="https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg" 
+                                alt="${item.titulo}"
+                                onerror="this.src='https://placehold.co/600x400/111827/3B82F6?text=Esteban+Reyes+Marcano'"
+                                class="w-full h-full object-cover opacity-65 group-hover:scale-105 group-hover:opacity-80 transition-all duration-500"
+                            >
+                            <div class="absolute inset-0 bg-gradient-to-t from-bgCard via-bgCard/40 to-transparent"></div>
+                            
+                            <!-- Badge Fecha y Medio -->
+                            <div class="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider ${item.destacada ? 'bg-red-500/90 text-white' : 'bg-bgMain/90 text-accentCyan border border-gray-700'}">
+                                    ${item.fecha}
+                                </span>
+                                <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-bgMain/90 text-gray-200 border border-gray-700">
+                                    ⏱ ${item.duracionTexto}
+                                </span>
+                            </div>
+
+                            <!-- Botón Play Central -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-accentBlue/90 text-white flex items-center justify-center shadow-lg shadow-accentBlue/40 group-hover:scale-110 transition-transform">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cuerpo de la tarjeta -->
+                        <div class="p-5">
+                            <p class="text-xs text-accentCyan font-medium mb-1.5 truncate">${item.medio}</p>
+                            <h3 class="text-base sm:text-lg font-display font-bold text-white mb-2.5 leading-snug line-clamp-2">
+                                ${item.titulo}
+                            </h3>
+                            <p class="text-xs sm:text-sm text-textMuted leading-relaxed mb-4 line-clamp-3">
+                                ${item.resumenCorto}
+                            </p>
+                            <div class="flex flex-wrap gap-1.5 mb-2">
+                                ${tagsHtml}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie de tarjeta con CTA -->
+                    <div class="px-5 pb-5 pt-2">
+                        <button onclick="loadInterviewById('${item.id}', true)" class="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+                            isLoaded 
+                                ? 'bg-accentCyan/20 text-accentCyan border border-accentCyan/40' 
+                                : 'bg-gray-800 hover:bg-accentBlue text-white'
+                        }">
+                            <span>${isLoaded ? '✓ Cargada en el reproductor principal' : 'Cargar entrevista y capítulos ↑'}</span>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function resetFilters() {
+            selectedTag = "Todas";
+            searchQuery = "";
+            document.getElementById("search-input").value = "";
+            renderFilterTags();
+            renderInterviewsGrid();
+        }
+
+        // Cargar cualquier entrevista del archivo en el Hero y su reproductor
+        function loadInterviewById(id, scrollToHero = true) {
+            const found = interviewsData.find(item => item.id === id);
+            if (!found) return;
+
+            currentInterview = found;
+            activeChapterIndex = 0;
+            customClipEnd = null;
+
+            // Actualizar textos del Hero
+            document.getElementById("hero-badge-status").textContent = found.badgeStatus;
+            document.getElementById("hero-programa").textContent = found.medio;
+            document.getElementById("hero-fecha").textContent = found.fecha;
+            document.getElementById("hero-titulo").textContent = found.titulo;
+            document.getElementById("hero-duration-badge").textContent = `Corte: ${found.duracionTexto}`;
+
+            // Actualizar viñetas del resumen ejecutivo
+            const bulletsEl = document.getElementById("hero-bullets");
+            bulletsEl.innerHTML = found.bullets.map(b => `
+                <li class="flex items-start gap-2.5">
+                    <span class="text-accentBlue font-bold mt-0.5">•</span>
+                    <span>${b}</span>
+                </li>
+            `).join("");
+
+            renderChaptersList();
+            renderInterviewsGrid();
+
+            if (isPlayerReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                ytPlayer.loadVideoById({
+                    videoId: found.youtubeId,
+                    startSeconds: found.startSeconds,
+                    endSeconds: found.endSeconds
+                });
+            }
+
+            if (scrollToHero) {
+                document.getElementById("ultima-entrevista").scrollIntoView({ behavior: "smooth" });
+                showToast(`Entrevista cargada: ${found.fecha}`);
+            }
+        }
+
+        // 6. SUSCRIPCIÓN Y NOTIFICACIONES UI
+        function handleSubscribe(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById("subscriber-email");
+            const email = emailInput.value;
+            emailInput.value = "";
+            showToast(`¡Gracias! Hemos registrado a ${email} para las alertas semanales.`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            const msgEl = document.getElementById("toast-message");
+            msgEl.textContent = message;
+            toast.classList.remove("translate-y-24", "opacity-0");
+            toast.classList.add("translate-y-0", "opacity-100");
+
+            setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-24", "opacity-0");
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
